@@ -1,6 +1,9 @@
+
+
 .container {
  border: 2px solid black;
  margin-top: 40px;
+
 }
 
 .form, .card {
@@ -13,10 +16,9 @@
 }
 
 .card {
-  
     padding: 10px;
-    
-
+    overflow: scroll;
+    height: 400px;
 }
 
 .box{
