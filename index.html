@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Planner</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+    <header>
+        <!-- Navigation -->
+        <nav class="navbar navbar-light bg-light">
+            <div class="container-fluid">
+            <a class="navbar-brand" href="#">
+                <img src="images/calendar-check.svg" alt="" width="40" height="30" class="d-inline-block align-text-top">
+                Task Planner
+            </a>
+            </div>
+        </nav>
+    </header>
+    <!-- Main Area -->
+    <main>
+    <div class="container">
+        <div class="row align-items-center">    
+          <div class="col form">
+            <form>
+                <label>Task Form</label>
+                
+                <div class="mb-3">
+                  <label for="taskName" class="form-label">Task Name</label>
+                  <input type="text" name="taskName" class="form-control" id="taskName" aria-describedby="taskNameHelp" />
+                </div>
+                <div class="mb-3">
+                  <label for="description" class="form-label">Description</label><br>
+                  <textarea id="description" name="description" rows="4" cols="50"></textarea>
+                </div>
+                <div class="mb-3">
+                    <label for="assignedTo" class="form-label">Assigned To</label>
+                    <input type="text" name="assignedTo" class="form-control" id="assignedTo" aria-describedby="assignedToHelp" />
+                  </div>
+                <div class="mb-3">
+                    <label for="dueDate" class="form-label">Due Date</label><br>
+
+                    <label for="days">Days</label>
+                    <select name="days" id="days">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    </select>
+
+                    <label for="month">Month</label>
+                    <select name="month" id="month">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    </select>
+
+                    <label for="year">Year</label>
+                    <select name="year" id="year">
+                    <option value="2021">2021</option>
+                    <option value="2022">2022</option>
+                    <option value="2023">2023</option>
+                    </select>
+                </div>
+
+                <div class="mb-3">       
+                    <label for="status">Status</label>
+                    <select name="status" id="status">
+                    <option value="todo">TODO</option>
+                    <option value="progress">Progress</option>
+                    <option value="review">In Review</option>
+                    <option value="done">Done</option>
+                    </select>
+                  </div>
+                <button type="submit" class="btn btn-primary">Add Task</button>
+              </form>
+          </div>
+          
+          <div class="col card">
+            Card Layout
+          </div>
+        </div>
+        </div>
+      </div>
+    </main>
+    <!--Form Layout -->
+
+    <!-- Card Layout -->
+    <footer>
+
+    </footer>
+</body>
+</html>
