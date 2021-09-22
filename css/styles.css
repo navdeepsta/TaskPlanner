@@ -5,18 +5,18 @@
 
 /* Form layout label */
 .form label{
-    font-size: 1.2rem;
+    font-size: 1.1rem;
+    font-weight: bold;
 }
 
 /* Card Layout */
 .card {
+    border: none;
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
     flex-wrap: wrap;
-    padding: 10px;
-    border: none;
 }
 
 /* Card in a card layout */
@@ -69,4 +69,3 @@ textarea {
     width: 28px;
     height: 28px;
 }
-
