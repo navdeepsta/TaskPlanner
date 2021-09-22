@@ -44,39 +44,42 @@
             <div class="modal-body">
                 <form>
                     <div class="mb-3">
-                    <label for="taskName" class="form-label">Task Name</label>
-                    <input type="text" name="taskName" class="form-control" id="taskName" aria-describedby="taskNameHelp" />
+                    <label for="task-name" class="form-label">Task Name</label><span class="err-task"></span>
+                    <input  type="text" name="taskName" class="form-control" id="task-name" aria-describedby="taskNameHelp" />    
                     </div>
-                    <div class="mb-3">
-                    <label for="description" class="form-label">Description</label><br>
+
+                    <div class="mb-3" >
+                    <label for="task-description" class="form-label">Description</label><span class="err-task"></span><br>
                     <div>
-                        <textarea class="form-control" placeholder="" id="description"></textarea>
+                        <textarea class="form-control" placeholder="" id="task-description"></textarea>
                     </div>
                     </div>
-                    <div class="mb-3">
-                        <label for="assignedTo" class="form-label">Assigned To</label>
-                        <input type="text" name="assignedTo" class="form-control" id="assignedTo" aria-describedby="assignedToHelp" />
+
+                    <div class="mb-3" >
+                        <label for="task-assign" class="form-label">Assigned To</label><span class="err-task"></span>
+                        <input type="text" name="assignedTo" class="form-control" id="task-assign" aria-describedby="assignedToHelp" />
                     </div>
 
                     <div class="d-flex align-items-center">
                         <div class="mb-3 me-3">
-                            <label for="date" class="form-label">Date</label>
-                            <input type="date" class="form-control" id="date">
+                            <label for="task-date" class="form-label">Date</label><span class="err-task"></span>
+                            <input type="date" class="form-control" id="task-date" >
                         </div>
                         <div class="mb-3">
-                            <label for="status" class="form-label">Status</label>
-                            <select id="status" class="form-select">
+                            <label for="task-status" class="form-label">Status</label><span class="err-task"></span>
+                            <select id="task-status" class="form-select">
                                 <option selected>Select...</option>
                                 <option>To Do..</option>
                                 <option>In Progress</option>
                                 <option>Review</option>
                                 <option>Done</option>
                             </select>
+                         
                         </div>  
                     </div>
                     <div class="d-flex align-items-start">
-                        <input type="submit" class="btn btn-primary" value="Add Task">
-                        <input type="reset" class="btn btn-secondary" value="Reset">
+                        <input disabled type="submit" class="btn btn-primary" value="Add Task" id="task-submit">
+                        <input type="reset" class="btn btn-secondary" value="Reset" id="task-reset">
                     </div>
                 </form>
             </div>
@@ -232,7 +235,8 @@
 
     <!-- Option 1: Bootstrap Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
-    <script src="script/script.js" ></script>
+    <script src="js/taskManager.js" ></script>
+    <script src="js/index.js" ></script>
     <!-- Option 2: Separate Popper and Bootstrap JS -->
     <!--
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js" integrity="sha384-W8fXfP3gkOKtndU4JGtKDvXbO53Wy8SZCQHczT5FMiiqmQfUpWbYdTil/SxwZgAN" crossorigin="anonymous"></script>

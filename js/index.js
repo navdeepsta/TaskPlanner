@@ -7,54 +7,42 @@ const taskAssign = document.querySelector('#task-assign');
 const taskDate = document.querySelector('#task-date');
 const taskStatus = document.querySelector('#task-status');
 const spanError =  document.getElementsByClassName('err-task');
+const errors = [true, true, true, true, true];
 
 /* Declaring variables to store form field values */
-let nameData, descriptionData, taskAssignData, taskDateData, taskStatusData, errorMessage;
-function validFormFieldInput( ) {
-    // alert("Data : "+nameData+"\n"+descriptionData+"\n"+taskAssignData
-    // +"\n"+taskDateData+"\n"+ taskStatusData);
-    alert('dd')
-}
+let nameData, descriptionData, taskAssignData, 
+    taskDateData, taskStatusData, errorMessage;
 
+/* Applying event listeners on input fields */
 taskName.addEventListener('focusout', ()=>{
     nameData = taskName.value;
-    errorMessageGenerator(taskName, spanError[0], nameData);
-  
+    errorMessageGenerator(taskName, spanError[0], nameData);  
+    updateSubmission();
 });
 
 taskDescription.addEventListener('focusout', ()=>{
     descriptionData = taskDescription.value;
     errorMessageGenerator(taskDescription, spanError[1], descriptionData);
-    if(taskDescription.length >= 4){
-        ++count;
-        alert(count)
-    }
-    if(count === 3) {
-        taskSubmit.disabled = false;
-    }
+    updateSubmission();
 });
 
 taskAssign.addEventListener('focusout', ()=>{
     taskAssignData = taskAssign.value;
     errorMessageGenerator(taskAssign, spanError[2], taskAssignData);
-    if(taskAssign.length >= 4){
-        ++count;
-        alert(count)
-    }
-    if(count === 3) {
-        taskSubmit.disabled = false;
-    }
+    updateSubmission();
 });
 
 taskDate.addEventListener('focusout', ()=>{
     taskDateData = taskDate.value;
     if( !taskDateData ) {
         errorMessageGenerator(taskDate, spanError[3], '');
-        spanError[3].innerHTML = ' Enter the correct date';
+        errorMessage =' Enter the correct date';
+        spanError[3].innerHTML = errorMessage;
     } else {
         errorMessageStyleReset(taskDate, spanError[3]);
+        
     }
-    validateAllFields()
+   
 });
 
 taskStatus.addEventListener('focusout', ()=>{
@@ -62,38 +50,55 @@ taskStatus.addEventListener('focusout', ()=>{
     if( taskStatusData === 'Select...')
     {
         errorMessageGenerator(taskStatus, spanError[4], '');
-        spanError[4].innerHTML = ' Select a status';
+        errorMessage = ' Select a status';
+        spanError[4].innerHTML = errorMessage;
     } else{
         errorMessageStyleReset(taskStatus, spanError[4]);
     }
-    validateAllFields()
 });
 
 function errorMessageGenerator( parentElement, spanElement, data ) {   
-    data.length < 5  ? errorMessageStyle(parentElement, spanElement) : errorMessageStyleReset(parentElement, spanElement);
+    data.length < 5   ? errorMessageStyle(parentElement, spanElement) 
+                      : errorMessageStyleReset(parentElement, spanElement);
 }
-
 
 function errorMessageStyle( parentElement, spanElement ) {
     parentElement.style.border = '1px solid red';
-    spanElement.style.color = 'red';
     errorMessage = ' Enter alteast 5 letters';
     spanElement.innerHTML = errorMessage;
+    spanElement.style.color = 'red';
+    updateErrors(parentElement, true);
 }
 
 function errorMessageStyleReset( parentElement, spanElement ) {
     spanElement.innerHTML = '';
     parentElement.style.border = '';
-
+    updateErrors(parentElement, false);  
 }
 
-function validateAllFields() {
-    if(!nameData && !descriptionData && !taskAssignData && 
-        !taskDateData && !taskStatusData && !errorMessage) {
-            taskSubmit.disabled = false;
-        }else{
-           
-        }
+function updateErrors( parentElement, errorFlag ) {
+    switch( parentElement.id ) {
+        case taskName.id:
+            errors[0] = errorFlag;
+            break;
+        case taskDescription.id:
+            errors[1] = errorFlag;
+            break;
+        case taskAssign.id:
+            errors[2] = errorFlag;
+            break;
+    } 
+}
+
+// enable or disable submit button based on the result of validation
+function updateSubmission() {
+    if(errors[0] || errors[1] || errors[2]) {
+        taskSubmit.disabled = true;
+    }else{
+        taskSubmit.disabled = false;
+    }
 }
 
 taskSubmit.addEventListener('click', validFormFieldInput);
+
+const taskManager = new TaskManager();
