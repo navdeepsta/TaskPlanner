@@ -1,3 +1,8 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 /* Container for form and card layouts */
 .container {
     margin-top: 15px;
@@ -24,9 +29,9 @@
     border: 1.5px solid black; 
     border-radius:5px;
     display: grid;
-    width: 200px;
-    height: 210px;
-    grid-template-rows: 1fr 2fr 1fr;
+    width: 250px;
+    height: 260px;
+    grid-template-rows: 1fr 2fr .5fr .5fr;
     grid-template-columns: 1fr;
     margin: 5px;
 }
@@ -37,10 +42,6 @@ textarea {
 } 
 
 /* Rows in a card grid */
-.box select, input {
-    width: 100%;
-    margin: 2px;
-}
 
 .box-1 {
     display: flex;
@@ -50,7 +51,7 @@ textarea {
 
 .date {
     font-family: monospace;
-    font-size: 12px;
+    font-size: 16px;
     padding: 2px; 
 }
 
@@ -59,12 +60,26 @@ textarea {
 }
 
 .box-3 {
+    display: grid;
+    grid-template-rows: 1fr;
+    grid-template-columns: 1fr 1fr;
+  
+}
+.box-3 p{
     display: flex;
-    flex-wrap: wrap;
     justify-content: center;
     align-items: center;
+    height: 100%;
+    border-top: .5px solid black;
+    border-bottom: .5px solid black;
 }
 
+.box-4 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+   
+}
 .box img {
     width: 28px;
     height: 28px;

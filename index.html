@@ -98,128 +98,26 @@
     <div class="container">
         <div class="row align-items-start">  
               
-          
           <div class="col-sm-12  card" id="card-section">
             <!-- Card Layout -->
                     <div class ="child"> 
                         <div class = "box box-1 bg-primary text-light">
-                            <span>Make Tea</span>
-                            <span class="date">07 Sept 2021</span>
+                            <span id="card-name">Make Tea</span>
+                            <span id="card-date" class="date">07 Sept 2021</span>
                         </div>
                     
                         <div class = "box">
-                            <p>Black Tea</p>
+                            <p id="card-description">Black Tea</p>
                         </div>
                       
-                        <div class = "box box-3"> 
-                                <input type="text" value="Navi" placeholder="Navi" name="cardAssignedTo" id="cardAssignedTo" disabled/>     
-                                <!-- <select  name="cardStatus" id="cardStatus">
-                                    <option value="todo">TODO</option>
-                                    <option value="progress">In Progress</option>
-                                    <option value="review">Review</option>
-                                    <option value="done">Done</option>
-                                </select> -->
-                                <input type="text" value="TODO" disabled/>
-                                <img src="images/edit.svg" alt="edit"/>
-                                <img src="images/trash.svg" alt="delete"/>
-                        </div> 
-                    </div>
-    
-                    <div class ="child"> 
-                        <div class = "box box-1 bg-info text-light">
-                            <span>Task Name</span>
-                            <span class="date">14 Sept 2021</span>
+                        <div class = "box box-3">
+                                <p id="card-assign">Navi</p>
+                                <p id="card-status">Todo</p>
                         </div>
-                    
-                        <div class = "box">
-                            <textarea  placeholder="Description"></textarea>
-                        </div>
-                      
-                        <div class = "box box-3"> 
-                                <input type="text" placeholder="AssignedTo" name="cardAssignedTo" id="cardAssignedTo"/>     
-                                <select  name="cardStatus" id="cardStatus">
-                                    <option value="progress">In Progress</option>
-                                    <option value="todo">TODO</option>
-                                    <option value="review">Review</option>
-                                    <option value="done">Done</option>
-                                </select>
-                                
-                                <img src="images/edit.svg" alt="edit"/>
-                                <img src="images/trash.svg" alt="delete"/>
-                        </div> 
-                    </div>
-    
-                    <div class ="child"> 
-                        <div class = "box box-1 bg-primary text-light">
-                            <span>Task Name</span>
-                            <span class="date">28 Sept 2021</span>
-                        </div>
-                    
-                        <div class = "box">
-                            <textarea  placeholder="Description"></textarea>
-                        </div>
-                      
-                        <div class = "box box-3"> 
-                                <input type="text" placeholder="AssignedTo" name="cardAssignedTo" id="cardAssignedTo"/>     
-                                <select  name="cardStatus" id="cardStatus">
-                                    <option value="todo">TODO</option>
-                                    <option value="progress">In Progress</option>
-                                    <option value="review">Review</option>
-                                    <option value="done">Done</option>
-                                </select>
-                                
-                                <img src="images/edit.svg" alt="edit"/>
-                                <img src="images/trash.svg" alt="delete"/>
-                        </div> 
-                    </div>
-    
-                    <div class ="child"> 
-                        <div class = "box box-1 bg-secondary text-light">
-                            <span>Task Name</span>
-                            <span class="date">07 Oct 2021</span>
-                        </div>
-                    
-                        <div class = "box">
-                            <textarea  placeholder="Description"></textarea>
-                        </div>
-                      
-                        <div class = "box box-3"> 
-                                <input type="text" placeholder="AssignedTo" name="cardAssignedTo" id="cardAssignedTo"/>     
-                                <select  name="cardStatus" id="cardStatus">
-                                    <option value="review">Review</option>
-                                    <option value="todo">TODO</option>
-                                    <option value="progress">In Progress</option> 
-                                    <option value="done">Done</option>
-                                </select>
-                                
-                                <img src="images/edit.svg" alt="edit"/>
-                                <img src="images/trash.svg" alt="delete"/>
-                        </div> 
-                    </div>
-                   
-                    <div class ="child"> 
-                        <div class = "box box-1 bg-success text-light">
-                            <span>Task Name</span>
-                            <span class="date">14 Oct 2021</span>
-                        </div>
-                    
-                        <div class = "box">
-                            <textarea  placeholder="Description"></textarea>
-                        </div>
-                      
-                        <div class = "box box-3"> 
-                                <input type="text" placeholder="AssignedTo" name="cardAssignedTo" id="cardAssignedTo"/>     
-                                <select  name="cardStatus" id="cardStatus">
-                                    <option value="done">Done</option>
-                                    <option value="todo">TODO</option>
-                                    <option value="progress">In Progress</option>
-                                    <option value="review">Review</option>  
-                                </select>
-                                
-                                <img src="images/edit.svg" alt="edit"/>
-                                <img src="images/trash.svg" alt="delete"/>
-                        </div> 
-                    </div>     
+                        <div class = "box box-4">
+                            <img id="card-edit" src="images/edit.svg" alt="edit"/>
+                            <img id="card-delete" src="images/trash.svg" alt="delete"/>
+                        </div>   
             </div>
           </div>
         </div>
