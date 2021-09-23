@@ -141,7 +141,14 @@ function updateSubmission() {
 }
 
 function validFormFieldInput() {
-   
+    const taskManager = new TaskManager();
+    taskManager.addTask(nameData,
+        descriptionData,
+        taskAssignData,
+        taskDateData,
+        taskStatusData,
+        errorMessage);
+        alert(taskManager.tasks)
  }
 
 taskSubmit.addEventListener("click", validFormFieldInput);
