@@ -21,12 +21,7 @@ let nameData,
 taskName.addEventListener("focusout", () => {
     nameData = taskName.value;
     errorMessage = " Enter alteast 5 letters";
-    errorMessageGenerator(
-        taskName,
-        spanError[0],
-        nameData,
-        errorMessage
-    );
+    errorMessageGenerator(taskName, spanError[0], nameData, errorMessage);
     updateSubmission();
 });
 
@@ -45,35 +40,25 @@ taskDescription.addEventListener("focusout", () => {
 taskAssign.addEventListener("focusout", () => {
     taskAssignData = taskAssign.value;
     errorMessage = " Enter alteast 5 letters";
-    errorMessageGenerator(
-        taskAssign,
-        spanError[2],
-        taskAssignData,
-        errorMessage
-    );
+    errorMessageGenerator(taskAssign, spanError[2], taskAssignData, errorMessage);
     updateSubmission();
 });
 
-taskDate.onclick = ()=>{
+taskDate.onclick = () => {
     let now = new Date();
     let month = now.getMonth() + 1;
-    if(month < 10){
-        month = '0'+(month);
+    if (month < 10) {
+        month = "0" + month;
     }
-    let currentDate = now.getFullYear()+"-"+month+"-"+now.getDate();
-    taskDate.setAttribute('min', currentDate);
-}
+    let currentDate = now.getFullYear() + "-" + month + "-" + now.getDate();
+    taskDate.setAttribute("min", currentDate);
+};
 
 taskDate.addEventListener("focusout", () => {
     taskDateData = taskDate.value;
     errorMessage = " Enter the correct date";
     !taskDateData
-        ? errorMessageGenerator(
-            taskDate,
-            spanError[3],
-            "",
-            errorMessage
-        )
+        ? errorMessageGenerator(taskDate, spanError[3], "", errorMessage)
         : errorMessageStyleReset(taskDate, spanError[3]);
     updateSubmission();
 });
@@ -140,17 +125,46 @@ function updateSubmission() {
     }
 }
 
-function validFormFieldInput() {
-    const taskManager = new TaskManager();
-    taskManager.addTask(nameData,
+const taskManager = new TaskManager();
+function validFormFieldInput(event) {
+    taskManager.addTask(
+        nameData,
         descriptionData,
         taskAssignData,
         taskDateData,
         taskStatusData,
-        errorMessage);
-        alert(taskManager.tasks)
- }
+        errorMessage
+    );
+
+    createCard(event);
+}
+
+function createCard(event) {
+    event.preventDefault();
+    const cardContainer = document.querySelector("#card-section");
+    const tasks = taskManager.tasks;
+    let card = document.createElement("div");
+    tasks.forEach((task) => {
+        card.innerHTML = `<div class ="child"> 
+                                <div class = "box box-1 bg-primary text-light">
+                                    <span class="card-name">${task.name}</span>
+                                    <span class="card-date" class="date">${task.date}</span>
+                                </div>
+                                <div class = "box">
+                                    <p class="card-description">${task.description}</p>
+                                </div>
+                                <div class = "box box-3">
+                                    <p class="card-assign">${task.assign}</p>
+                                    <p id="card-status">${task.status}</p>
+                                </div>
+                                <div class = "box box-4">
+                                    <img class="card-edit" src="images/edit.svg" alt="edit"/>
+                                    <img class="card-delete" src="images/trash.svg" alt="delete"/>
+                                </div>   
+                            </div>`;
+                            
+        cardContainer.appendChild(card);
+    });
+}
 
 taskSubmit.addEventListener("click", validFormFieldInput);
-
-
