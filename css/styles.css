@@ -13,7 +13,9 @@
     font-size: 1.1rem;
     font-weight: bold;
 }
-
+#task-submit, #task-reset {
+    width: 30%;
+}
 /* Card Layout */
 .card {
     border: none;
@@ -30,16 +32,22 @@
     border-radius:5px;
     display: grid;
     width: 250px;
-    height: 260px;
-    grid-template-rows: 1fr 2fr .5fr .5fr;
+    height: 280px;
+    grid-template-rows: 1fr 4fr 1fr 1fr;
     grid-template-columns: 1fr;
     margin: 5px;
 }
 
-textarea {
+.card-status {
+    background-color: rgb(20, 20, 20);
+    padding: 0px 10px;
     width: 100%;
-    height: 100%;
-} 
+    border-radius: 2px;
+    border-bottom: 1.5px solid black;
+    font-size: 13px;
+    text-align: center;
+    color: seashell;
+}
 
 /* Rows in a card grid */
 
@@ -47,40 +55,71 @@ textarea {
     display: flex;
     flex-direction: column;
     align-items: center;
+    font-weight: bold;
+    font-size: 18px;
 }
 
 .date {
     font-family: monospace;
-    font-size: 16px;
+    font-size: 14px;
     padding: 2px; 
 }
 
-.child textarea {
-    border: none;
+.box-2 {
+    padding: 5px;
+    font-size: 14px;
+    text-align: justify;
+
 }
 
 .box-3 {
+    border-top: 1px solid black;
+    border-bottom:  1px solid black;
     display: grid;
     grid-template-rows: 1fr;
-    grid-template-columns: 1fr 1fr;
-  
+    grid-template-columns: 1fr 3fr;
+    background-color: rgb(250,250,250);
+
 }
-.box-3 p{
+
+.box-3 img {
     display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
-    border-top: .5px solid black;
-    border-bottom: .5px solid black;
+    align-self: center;
+    justify-self: center;
+
 }
+
+.box-3 p {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    font-weight: bold;
+    border-left: 1px solid black;
+    padding: 0px 5px;
+}
+
 
 .box-4 {
     display: flex;
     justify-content: center;
     align-items: center;
-   
+    background-color:rgb(240,240,240);
 }
+
 .box img {
     width: 28px;
     height: 28px;
 }
+
+footer {
+   width: 100%;
+   background-color: rgb(49, 48, 48);
+   position: fixed;
+   bottom: 0px;
+   color: #fff;
+   align-items: center;
+   justify-content: center;
+   text-align: center;
+}
+

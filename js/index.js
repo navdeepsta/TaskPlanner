@@ -7,7 +7,9 @@ const taskAssign = document.querySelector("#task-assign");
 const taskDate = document.querySelector("#task-date");
 const taskStatus = document.querySelector("#task-status");
 const spanError = document.getElementsByClassName("err-task");
+
 const errors = [true, true, true, true, true];
+const months = ['Jan', 'Feb', 'Mar', 'April', 'May', 'Jun', 'Jul', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'];
 
 /* Declaring variables to store form field values */
 let nameData,
@@ -52,20 +54,24 @@ taskDate.onclick = () => {
     }
     let currentDate = now.getFullYear() + "-" + month + "-" + now.getDate();
     taskDate.setAttribute("min", currentDate);
+
 };
 
 taskDate.addEventListener("focusout", () => {
     taskDateData = taskDate.value;
-    errorMessage = " Enter the correct date";
+    errorMessage = " Select date";
     !taskDateData
         ? errorMessageGenerator(taskDate, spanError[3], "", errorMessage)
         : errorMessageStyleReset(taskDate, spanError[3]);
+
+    let d = new Date(taskDateData);
+    taskDateData = d.getDate()+" "+months[d.getMonth()]+" "+d.getFullYear();
     updateSubmission();
 });
 
 taskStatus.addEventListener("focusout", () => {
     taskStatusData = taskStatus.value;
-    errorMessage = " Select a status";
+    errorMessage = " Select status";
     taskStatusData === "Select..."
         ? errorMessageGenerator(taskStatus, spanError[4], "", errorMessage)
         : errorMessageStyleReset(taskStatus, spanError[4]);
@@ -127,6 +133,7 @@ function updateSubmission() {
 
 const taskManager = new TaskManager();
 function validFormFieldInput(event) {
+    resetValues();
     taskManager.addTask(
         nameData,
         descriptionData,
@@ -137,6 +144,15 @@ function validFormFieldInput(event) {
     );
 
     createCard(event);
+    taskSubmit.disabled = true;
+}
+
+function resetValues() {
+    taskName.value = ''; 
+    taskDescription.value = '';
+    taskAssign.value = '';
+    taskDate.value = '';
+    taskStatus.value = 'Select...';
 }
 
 function createCard(event) {
@@ -144,27 +160,78 @@ function createCard(event) {
     const cardContainer = document.querySelector("#card-section");
     const tasks = taskManager.tasks;
     let card = document.createElement("div");
-    tasks.forEach((task) => {
+    tasks.forEach( task => {
+        let bgColor = getTaskStatusColor( task );  
         card.innerHTML = `<div class ="child"> 
-                                <div class = "box box-1 bg-primary text-light">
-                                    <span class="card-name">${task.name}</span>
-                                    <span class="card-date" class="date">${task.date}</span>
+                                <div class = "box box-1  ${bgColor} text-dark bg-opacity-25">
+                                    <span class="card-status ${bgColor}" bg-opacity-75>${task.status}</span>
+                                    <span class="card-name">${task.name.substring(0, 20)}</span>
+                                    <span class="card-date date">${task.date}</span>
                                 </div>
-                                <div class = "box">
-                                    <p class="card-description">${task.description}</p>
+                                <div class = "box box-2">
+                                    <p class="card-description">${task.description.substring(0, 140)}</p>
                                 </div>
                                 <div class = "box box-3">
-                                    <p class="card-assign">${task.assign}</p>
-                                    <p id="card-status">${task.status}</p>
+                                    <img src="images/person.svg" alt="assigned to"/>
+                                    <p class="card-assign">${task.assign.substring(0, 20)}</p>
                                 </div>
                                 <div class = "box box-4">
-                                    <img class="card-edit" src="images/edit.svg" alt="edit"/>
-                                    <img class="card-delete" src="images/trash.svg" alt="delete"/>
+                                    <img class="card-edit" card-id=${task.taskId} src="images/edit.svg" alt="edit"/>
+                                    <img class="card-delete" card-id=${task.taskId} src="images/trash.svg" alt="delete"/>
                                 </div>   
                             </div>`;
-                            
+            
         cardContainer.appendChild(card);
+        onCardButtonClick( task );
     });
 }
 
-taskSubmit.addEventListener("click", validFormFieldInput);
+function getTaskStatusColor( task ) {
+    switch( task.status ) {
+        case 'Done':
+            return 'bg-success';
+        case 'Review':
+            return 'bg-info text-dark';
+        case 'In Progress':
+            return 'bg-secondary';
+        default : return 'bg-primary';
+    }
+}
+
+function onCardButtonClick( task ) {
+    let cardEdit = document.getElementsByClassName("card-edit");
+    let cardDelete = document.getElementsByClassName("card-delete");
+
+    Array.from(cardEdit).forEach( edit => {
+        edit.onmousedown = () => {
+            edit.style.padding = "2px";
+        };
+    })
+
+    Array.from(cardEdit).forEach( edit => {
+        edit.onmouseup = () => {
+            edit.style.padding = "";
+            edit.style.backgroundColor = "";
+        };
+    })
+
+    Array.from(cardDelete).forEach( del => {
+        del.onmousedown = () => {
+            del.style.padding = "2px";
+        };
+    })
+    
+    Array.from(cardDelete).forEach( del => {
+        del.onmouseup = () => {
+            del.style.padding = "";
+            del.style.backgroundColor = "";
+            let id =  parseInt(del.getAttribute('card-id'), 10);
+            taskManager.deleteTask(id);
+            del.parentElement.parentElement.style.display = 'none';
+        };
+    })
+}
+
+taskSubmit.addEventListener('click', validFormFieldInput);
+taskReset.addEventListener('click', () => taskSubmit.disabled = true);
+

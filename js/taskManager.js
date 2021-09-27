@@ -3,6 +3,7 @@ class TaskManager {
         this._tasks = [];
         this._currentId = currentId;
     }
+
     get tasks() {
         return this._tasks;
     }
@@ -17,5 +18,14 @@ class TaskManager {
             status: taskStatus
         }
         this._tasks.push(task);
+    }
+
+    deleteTask( id ) {
+         for(let i = 0; i < this._tasks.length; ++i) {
+                if(this._tasks[i].taskId === id) {
+                    this._tasks.splice(i, 1);
+                }
+            }
+            console.log(this._tasks.length);
     }
 }
