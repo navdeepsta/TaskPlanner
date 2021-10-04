@@ -13,7 +13,7 @@
     font-size: 1.1rem;
     font-weight: bold;
 }
-#task-submit, #task-reset {
+#task-submit, #task-reset, #task-save {
     width: 30%;
 }
 /* Card Layout */
@@ -110,6 +110,10 @@
 .box img {
     width: 28px;
     height: 28px;
+}
+
+.box .card-done {
+    padding: 1px;
 }
 
 footer {

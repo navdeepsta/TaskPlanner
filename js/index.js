@@ -1,135 +1,6 @@
-/*  Selecting elements from the index.html  */
-const taskSubmit = document.querySelector("#task-submit");
-const taskReset = document.querySelector("#task-reset");
-const taskName = document.querySelector("#task-name");
-const taskDescription = document.querySelector("#task-description");
-const taskAssign = document.querySelector("#task-assign");
-const taskDate = document.querySelector("#task-date");
-const taskStatus = document.querySelector("#task-status");
-const spanError = document.getElementsByClassName("err-task");
-
-const errors = [true, true, true, true, true];
-const months = ['Jan', 'Feb', 'Mar', 'April', 'May', 'Jun', 'Jul', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'];
-
-/* Declaring variables to store form field values */
-let nameData,
-    descriptionData,
-    taskAssignData,
-    taskDateData,
-    taskStatusData,
-    errorMessage;
-
-/* Applying event listeners on input fields */
-taskName.addEventListener("focusout", () => {
-    nameData = taskName.value;
-    errorMessage = " Enter alteast 5 letters";
-    errorMessageGenerator(taskName, spanError[0], nameData, errorMessage);
-    updateSubmission();
-});
-
-taskDescription.addEventListener("focusout", () => {
-    descriptionData = taskDescription.value;
-    errorMessage = " Enter alteast 5 letters";
-    errorMessageGenerator(
-        taskDescription,
-        spanError[1],
-        descriptionData,
-        errorMessage
-    );
-    updateSubmission();
-});
-
-taskAssign.addEventListener("focusout", () => {
-    taskAssignData = taskAssign.value;
-    errorMessage = " Enter alteast 5 letters";
-    errorMessageGenerator(taskAssign, spanError[2], taskAssignData, errorMessage);
-    updateSubmission();
-});
-
-taskDate.onclick = () => {
-    let now = new Date();
-    let month = now.getMonth() + 1;
-    if (month < 10) {
-        month = "0" + month;
-    }
-    let currentDate = now.getFullYear() + "-" + month + "-" + now.getDate();
-    taskDate.setAttribute("min", currentDate);
-
-};
-
-taskDate.addEventListener("focusout", () => {
-    taskDateData = taskDate.value;
-    errorMessage = " Select date";
-    !taskDateData
-        ? errorMessageGenerator(taskDate, spanError[3], "", errorMessage)
-        : errorMessageStyleReset(taskDate, spanError[3]);
-
-    let d = new Date(taskDateData);
-    taskDateData = d.getDate()+" "+months[d.getMonth()]+" "+d.getFullYear();
-    updateSubmission();
-});
-
-taskStatus.addEventListener("focusout", () => {
-    taskStatusData = taskStatus.value;
-    errorMessage = " Select status";
-    taskStatusData === "Select..."
-        ? errorMessageGenerator(taskStatus, spanError[4], "", errorMessage)
-        : errorMessageStyleReset(taskStatus, spanError[4]);
-    updateSubmission();
-});
-
-function errorMessageGenerator(parentElement, spanElement, data, errorMessage) {
-    data.length < 5
-        ? errorMessageStyle(parentElement, spanElement, errorMessage)
-        : errorMessageStyleReset(parentElement, spanElement);
-}
-
-function errorMessageStyle(parentElement, spanElement, errorMessage) {
-    parentElement.style.border = "1px solid red";
-    spanElement.innerHTML = errorMessage;
-    spanElement.style.color = "red";
-    spanElement.style.backgroundColor = "#eee";
-    spanElement.style.marginLeft = "10px";
-    spanElement.style.padding = "5px";
-    spanElement.style.borderRadius = "5px";
-    updateErrors(parentElement, true);
-}
-
-function errorMessageStyleReset(parentElement, spanElement) {
-    spanElement.innerHTML = "";
-    parentElement.style.border = "";
-    spanElement.style.backgroundColor = "";
-    updateErrors(parentElement, false);
-}
-
-function updateErrors(parentElement, errorFlag) {
-    switch (parentElement.id) {
-        case taskName.id:
-            errors[0] = errorFlag;
-            break;
-        case taskDescription.id:
-            errors[1] = errorFlag;
-            break;
-        case taskAssign.id:
-            errors[2] = errorFlag;
-            break;
-        case taskDate.id:
-            errors[3] = errorFlag;
-            break;
-        case taskStatus.id:
-            errors[4] = errorFlag;
-            break;
-    }
-}
-
-// enable or disable submit button based on the result of validation
-function updateSubmission() {
-    if (errors[0] || errors[1] || errors[2] || errors[3] || errors[4]) {
-        taskSubmit.disabled = true;
-    } else {
-        taskSubmit.disabled = false;
-    }
-}
+/* Input elements [ taskName, taskDescription, taskAssign, taskDate, taskStatus] and 
+   variables [nameData, descriptionData, taskAssignData, taskDateData, taskStatusData, errorMessage] 
+   are declered in validation.js */
 
 const taskManager = new TaskManager();
 function validFormFieldInput(event) {
@@ -142,9 +13,9 @@ function validFormFieldInput(event) {
         taskStatusData,
         errorMessage
     );
-
-    createCard(event);
-    taskSubmit.disabled = true;
+   taskManager.saveFile();
+   createCard(event);
+   taskSubmit.disabled = true;
 }
 
 function resetValues() {
@@ -155,35 +26,14 @@ function resetValues() {
     taskStatus.value = 'Select...';
 }
 
-function createCard(event) {
-    event.preventDefault();
-    const cardContainer = document.querySelector("#card-section");
-    const tasks = taskManager.tasks;
+function createCard(event) {  
     let card = document.createElement("div");
-    tasks.forEach( task => {
-        let bgColor = getTaskStatusColor( task );  
-        card.innerHTML = `<div class ="child"> 
-                                <div class = "box box-1  ${bgColor} text-dark bg-opacity-25">
-                                    <span class="card-status ${bgColor}" bg-opacity-75>${task.status}</span>
-                                    <span class="card-name">${task.name.substring(0, 20)}</span>
-                                    <span class="card-date date">${task.date}</span>
-                                </div>
-                                <div class = "box box-2">
-                                    <p class="card-description">${task.description.substring(0, 140)}</p>
-                                </div>
-                                <div class = "box box-3">
-                                    <img src="images/person.svg" alt="assigned to"/>
-                                    <p class="card-assign">${task.assign.substring(0, 20)}</p>
-                                </div>
-                                <div class = "box box-4">
-                                    <img class="card-edit" card-id=${task.taskId} src="images/edit.svg" alt="edit"/>
-                                    <img class="card-delete" card-id=${task.taskId} src="images/trash.svg" alt="delete"/>
-                                </div>   
-                            </div>`;
-            
-        cardContainer.appendChild(card);
-        onCardButtonClick( task );
-    });
+    let currentTask = taskManager.getCurrentTask();
+    let bgColor = getTaskStatusColor( currentTask );  
+    card.innerHTML = render( bgColor, currentTask);
+    cardContainer.appendChild( card );
+    onCardButtonClick();
+
 }
 
 function getTaskStatusColor( task ) {
@@ -198,9 +48,47 @@ function getTaskStatusColor( task ) {
     }
 }
 
-function onCardButtonClick( task ) {
+function render( bgColor, task) {
+    let cardLayout =`<div class ="child"> 
+                    <div class = "box box-1  ${bgColor} text-dark bg-opacity-25">
+                        <span class="card-status ${bgColor}" bg-opacity-75>${task.status}</span>
+                        <span class="card-name">${task.name}</span>
+                        <span class="card-date date">${task.date}</span>
+                    </div>
+                    <div class = "box box-2">
+                        <p class="card-description">${task.description}</p>
+                    </div>
+                    <div class = "box box-3">
+                        <img src="images/person.svg" alt="assigned to"/>
+                        <p class="card-assign">${task.assign}</p>
+                    </div>
+                    <div class = "box box-4">
+                        <img class="card-done me-1" card-id=${task.taskId} src="images/check-square.svg" alt="done"/>
+                        <img class="card-edit" card-id=${task.taskId} src="images/edit.svg" alt="edit"/>
+                        <img class="card-delete" card-id=${task.taskId} src="images/trash.svg" alt="delete"/>
+                    </div>   
+                </div>`
+
+        return cardLayout;
+}
+
+
+function onCardButtonClick() {
+    let cardDone = document.getElementsByClassName("card-done");
     let cardEdit = document.getElementsByClassName("card-edit");
     let cardDelete = document.getElementsByClassName("card-delete");
+    
+    
+    Array.from(cardDone).forEach( done => {
+        done.onmousedown = () => {
+            done.style.padding = "5px";
+            let id =  parseInt(done.getAttribute('card-id'), 10);
+            let task = taskManager.getTask( id );
+            task.status = 'Done';
+            taskManager.saveFile();
+            location.reload();
+        };
+    })
 
     Array.from(cardEdit).forEach( edit => {
         edit.onmousedown = () => {
@@ -212,6 +100,48 @@ function onCardButtonClick( task ) {
         edit.onmouseup = () => {
             edit.style.padding = "";
             edit.style.backgroundColor = "";
+            edit.setAttribute('data-bs-toggle', 'modal');
+            edit.setAttribute('data-bs-target',' #exampleModal');
+            taskSubmit.style.display = 'none';
+            taskReset.style.display = 'none';
+            taskSave.style.display = 'block';
+            
+            let id =  parseInt(edit.getAttribute('card-id'), 10);
+            let task = taskManager.getTask( id );
+            taskName.value = task.name;
+            taskDescription.value = task.description;
+            taskAssign.value = task.assign;
+            taskStatus.value = task.status;
+
+            let dateArray = task.date.split(' ');
+            let month = months.indexOf(dateArray[1]);
+            ++month;
+            if( month < 10 ) {
+                month = '0' + (month);
+            }
+            let day = dateArray[0];
+            if( day < 10 ) {
+                day = '0' + day;
+            }
+            taskDate.value = dateArray[2]+"-"+ month +"-"+day;
+
+            taskSave.addEventListener('click', () => {
+                task.name = taskName.value;
+                task.description = taskDescription.value;
+                task.assign = taskAssign.value;
+                task.status = taskStatus.value;
+                
+                let dateArray = taskDate.value.split('-');
+                let day = dateArray[2];
+                if( day.charAt(0) == '0') {
+                    day = day.charAt(1);
+                }
+                let month =  parseInt(dateArray[1], 10);
+                task.date = day+" "+months[month-1]+" "+dateArray[0];
+           
+                taskManager.saveFile();
+                location.reload();
+            })
         };
     })
 
@@ -232,6 +162,41 @@ function onCardButtonClick( task ) {
     })
 }
 
+
+
 taskSubmit.addEventListener('click', validFormFieldInput);
 taskReset.addEventListener('click', () => taskSubmit.disabled = true);
 
+
+window.addEventListener('load', (event) => {
+    taskManager.loadFile();
+    displayCardsOnPageLoad();
+    toggleMarkAsDone();
+
+  });
+
+  function displayCardsOnPageLoad() {
+    const tasks = taskManager.tasks;
+    tasks.forEach( task => {
+        let card = document.createElement("div");
+        let bgColor = getTaskStatusColor( task );  
+        card.innerHTML = render(bgColor, task);
+        cardContainer.appendChild(card);
+    
+        onCardButtonClick( task );
+    });
+
+  }
+
+  function toggleMarkAsDone() {
+    let  cardDone = document.getElementsByClassName('card-done')
+    Array.from(cardDone).forEach( done => {
+        let task = taskManager.getTask(parseInt(done.getAttribute('card-id')))
+        if(task.status === 'Done') {
+            console.log('done')
+            done.style.display = 'none'
+        }else{
+            done.style.display = 'block'
+        }
+    })
+  }
