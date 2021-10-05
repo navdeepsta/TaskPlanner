@@ -9,6 +9,13 @@ const taskStatus = document.querySelector("#task-status");
 const spanError = document.getElementsByClassName("err-task");
 const taskSave = document.getElementById("task-save");
 const cardContainer = document.querySelector("#card-section");
+const viewSelector = document.getElementById('view-selector');
+const multiColumnView = document.getElementById('multi-column-view');
+const todoContainer = document.getElementsByClassName("todo")[0]
+const progressContainer = document.getElementsByClassName("in-progress")[0]
+const reviewContainer = document.getElementsByClassName("review")[0]
+const doneContainer = document.getElementsByClassName("done")[0] 
+
 const errors = [true, true, true, true, true];
 const months = ['Jan', 'Feb', 'Mar', 'April', 'May', 'Jun', 'Jul', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'];
 

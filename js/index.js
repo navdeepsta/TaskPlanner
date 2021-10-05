@@ -32,8 +32,9 @@ function createCard(event) {
     let bgColor = getTaskStatusColor( currentTask );  
     card.innerHTML = render( bgColor, currentTask);
     cardContainer.appendChild( card );
+    location.reload()
     onCardButtonClick();
-
+    
 }
 
 function getTaskStatusColor( task ) {
@@ -174,15 +175,37 @@ window.addEventListener('load', (event) => {
     toggleMarkAsDone();
 
   });
+ 
 
   function displayCardsOnPageLoad() {
     const tasks = taskManager.tasks;
+
     tasks.forEach( task => {
-        let card = document.createElement("div");
-        let bgColor = getTaskStatusColor( task );  
+        const card = document.createElement("div");
+        const bgColor = getTaskStatusColor( task );  
         card.innerHTML = render(bgColor, task);
-        cardContainer.appendChild(card);
+ 
+       // if single column button is clicked, do this
+       if(taskManager.viewState) {
+       cardContainer.appendChild(card);
+       multiColumnView.style.display = 'none'
+       }
+       else{
+       
+        card.getElementsByClassName('card-status')[0].style.display = 'none'
+        if(task.status === 'To Do')
+            todoContainer.appendChild(card);
     
+        else if(task.status === 'In Progress')
+            progressContainer.appendChild(card);
+
+        else if(task.status === 'Review')
+            reviewContainer.appendChild(card);
+
+        else if(task.status === 'Done') 
+            doneContainer.appendChild(card)
+       }
+         
         onCardButtonClick( task );
     });
 
@@ -200,3 +223,18 @@ window.addEventListener('load', (event) => {
         }
     })
   }
+
+  viewSelector.onclick = ()=>{
+        // const selectText = document.createTextNode('Multi');
+        // selectView.appendChild(selectText);
+        if( taskManager.viewState === true) {
+          
+            taskManager.viewState = false
+
+        }else{
+            taskManager.viewState = true
+        }
+        taskManager.saveFile();
+        location.reload()
+        
+}

@@ -3,10 +3,19 @@ class TaskManager {
         this._tasks = [];
         this._currentId = currentId;
         this._myStorage = window.localStorage;
+        this._viewState = false;
     }
 
     get tasks() {
         return this._tasks;
+    }
+
+    set viewState( viewState ) {
+        this._viewState = viewState;
+    }
+
+    get viewState() {
+        return this._viewState;
     }
 
     getCurrentTask() {
@@ -38,12 +47,11 @@ class TaskManager {
 
     loadFile() {
         const tasks = this._myStorage.getItem('tasks');
+        const viewState = this._myStorage.getItem('viewState');
         if( tasks) {
         this._tasks = JSON.parse(tasks);
         this._currentId = this.tasks.length;
-        this._tasks.forEach( task =>{
-            console.log(task.taskId+" "+task.name+" "+task.status);
-        })
+        this._viewState = JSON.parse(viewState);
     }
     }
 
@@ -57,5 +65,6 @@ class TaskManager {
 
     saveFile() {
         this._myStorage.setItem('tasks', JSON.stringify(this._tasks));
+        this._myStorage.setItem('viewState', JSON.stringify(this._viewState ));
     }
 }

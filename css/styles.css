@@ -3,6 +3,7 @@
     padding: 0;
     box-sizing: border-box;
 }
+
 /* Container for form and card layouts */
 .container {
     margin-top: 15px;
@@ -16,6 +17,7 @@
 #task-submit, #task-reset, #task-save {
     width: 30%;
 }
+
 /* Card Layout */
 .card {
     border: none;
@@ -50,7 +52,6 @@
 }
 
 /* Rows in a card grid */
-
 .box-1 {
     display: flex;
     flex-direction: column;
@@ -127,3 +128,42 @@ footer {
    text-align: center;
 }
 
+/* Multi Column Container*/
+.todo, .review, .in-progress, .done {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: start;
+    margin-bottom: 15px;
+    
+}
+
+@media only screen and (max-width: 700px) {
+    .todo, .review, .in-progress, .done {
+        width: 100%; 
+    }
+  }
+
+@media only screen and (min-width: 700px) {
+    .todo, .review, .in-progress, .done {
+        width: 50%;
+    }
+  }
+
+  @media only screen and (min-width: 1200px) {
+    .todo, .review, .in-progress, .done {
+        width: 25%;
+    }
+  }
+
+.column-heading {
+    font-size: 1.2rem;
+    color: white;
+    padding: 0px 10px;
+    text-align: center;
+    width: 100%;
+    margin-bottom: 15px;
+    font-weight: bold;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
