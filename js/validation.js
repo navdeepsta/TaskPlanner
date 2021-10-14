@@ -19,15 +19,15 @@ const doneContainer = document.getElementsByClassName("done")[0]
 const errors = [true, true, true, true, true];
 const months = ['Jan', 'Feb', 'Mar', 'April', 'May', 'Jun', 'Jul', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'];
 
-/* Declaring variables to store form field values */
+/* Declaring variables to store form field values */ 
 let nameData,
     descriptionData,
     taskAssignData,
     taskDateData,
     taskStatusData,
     errorMessage;
+    /* Applying event listeners on input fields */
 
-/* Applying event listeners on input fields */
 taskName.addEventListener("focusout", () => {
     nameData = taskName.value;
     errorMessage = " Enter alteast 5 letters";
@@ -142,4 +142,5 @@ function updateSubmission() {
     } else {
         taskSubmit.disabled = false;
     }
+    
 }

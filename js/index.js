@@ -31,11 +31,15 @@ function createCard(event) {
     let currentTask = taskManager.getCurrentTask();
     let bgColor = getTaskStatusColor( currentTask );  
     card.innerHTML = render( bgColor, currentTask);
-    cardContainer.appendChild( card );
-    location.reload()
+    if(taskManager.viewState) {
+        cardContainer.appendChild( card );
+    }else{
+        addTaskToMultiColumnContainer( card, currentTask );
+    }
     onCardButtonClick();
-    
-}
+    dragAndDrop();
+
+} 
 
 function getTaskStatusColor( task ) {
     switch( task.status ) {
@@ -49,8 +53,8 @@ function getTaskStatusColor( task ) {
     }
 }
 
-function render( bgColor, task) {
-    let cardLayout =`<div class ="child"> 
+function render( bgColor, task) {  
+    let cardLayout =`<div class ="child draggable" draggable="true" card-id=${task.taskId}> 
                     <div class = "box box-1  ${bgColor} text-dark bg-opacity-25">
                         <span class="card-status ${bgColor}" bg-opacity-75>${task.status}</span>
                         <span class="card-name">${task.name}</span>
@@ -78,7 +82,16 @@ function onCardButtonClick() {
     let cardDone = document.getElementsByClassName("card-done");
     let cardEdit = document.getElementsByClassName("card-edit");
     let cardDelete = document.getElementsByClassName("card-delete");
-    
+    let cards = document.getElementsByClassName("child");
+
+    Array.from(cards).forEach(card=>{
+        card.onmouseover = ()=>{
+            card.style.boxShadow = '0 4px 8px 0 rgba(0, 0, 0, 0.3), 0 6px 20px 0 rgba(0, 0, 0, 0.19)'
+        }
+        card.onmouseout = ()=>{
+            card.style.boxShadow = ''
+        }
+    })
     
     Array.from(cardDone).forEach( done => {
         done.onmousedown = () => {
@@ -159,11 +172,10 @@ function onCardButtonClick() {
             let id =  parseInt(del.getAttribute('card-id'), 10);
             taskManager.deleteTask(id);
             del.parentElement.parentElement.style.display = 'none';
+            
         };
     })
 }
-
-
 
 taskSubmit.addEventListener('click', validFormFieldInput);
 taskReset.addEventListener('click', () => taskSubmit.disabled = true);
@@ -185,17 +197,26 @@ window.addEventListener('load', (event) => {
         const bgColor = getTaskStatusColor( task );  
         card.innerHTML = render(bgColor, task);
  
-       // if single column button is clicked, do this
        if(taskManager.viewState) {
-       cardContainer.appendChild(card);
-       multiColumnView.style.display = 'none'
+           cardContainer.appendChild(card);
+           multiColumnView.style.display = 'none'
        }
        else{
-       
-        card.getElementsByClassName('card-status')[0].style.display = 'none'
+        addTaskToMultiColumnContainer( card, task );  
+       }
+         
+        onCardButtonClick( task );
+    });
+
+    dragAndDrop();
+
+  }
+
+  function addTaskToMultiColumnContainer( card, task ) {
+    card.getElementsByClassName('card-status')[0].style.display = 'none';
         if(task.status === 'To Do')
             todoContainer.appendChild(card);
-    
+
         else if(task.status === 'In Progress')
             progressContainer.appendChild(card);
 
@@ -204,12 +225,39 @@ window.addEventListener('load', (event) => {
 
         else if(task.status === 'Done') 
             doneContainer.appendChild(card)
-       }
-         
-        onCardButtonClick( task );
-    });
 
   }
+  
+  function dragAndDrop() {
+    const draggables = document.querySelectorAll('.draggable');
+    const containers = document.querySelectorAll('.mv-container');
+    draggables.forEach( draggable => {
+        draggable.addEventListener('dragstart', ()=>{
+            draggable.classList.add('dragging');
+        })
+      
+        draggable.addEventListener('dragend', ()=>{
+            draggable.classList.remove('dragging');
+
+        })
+       
+        let x = 0;
+        containers.forEach( container=>{
+            container.addEventListener('dragover', event =>{
+                event.preventDefault();
+                const draggable = document.querySelector('.dragging');
+                let id =  parseInt(draggable.getAttribute('card-id'), 10);
+                const task = taskManager.getTask(id);
+                task.status = container.firstChild.textContent.trim();
+                taskManager.saveFile();
+                location.reload();
+                
+                container.appendChild(draggable);
+            });
+        });
+
+    })
+}
 
   function toggleMarkAsDone() {
     let  cardDone = document.getElementsByClassName('card-done')
@@ -225,12 +273,8 @@ window.addEventListener('load', (event) => {
   }
 
   viewSelector.onclick = ()=>{
-        // const selectText = document.createTextNode('Multi');
-        // selectView.appendChild(selectText);
         if( taskManager.viewState === true) {
-          
             taskManager.viewState = false
-
         }else{
             taskManager.viewState = true
         }

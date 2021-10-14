@@ -26,10 +26,10 @@
 ​
      <!-- Button trigger modal -->
     <div class="d-flex justify-content-center">
-        <button  type="button" class="btn btn-primary me-1" id="create-task" data-bs-toggle="modal" data-bs-target="#exampleModal">
+        <button  type="button" class="btn btn-outline-warning me-1" id="create-task" data-bs-toggle="modal" data-bs-target="#exampleModal">
             <h5>Create</h5>
         </button>
-        <button  type="button" class="btn btn-primary me-1" id="view-selector">
+        <button  type="button" class="btn btn-outline-warning me-1" id="view-selector">
             <h5 id="select-view">Toggle</h5>
         </button>
     
@@ -91,20 +91,18 @@
     <main>
     <div class="container">
         <div class="row align-items-start">    
-            <div class="col-sm-12 card" id="card-section">
+            <div class="col-sm-12 card" id="card-section"> 
             <!-- Card Layout -->
             </div>
         </div>
        </div>
-      <div id="multi-column-view-parent">
-
-      </div>
+     
       <div class="container" id="multi-column-view">
         <div  class="row">
-                <div class="todo"><span class="column-heading bg-primary">To Do</span></div>
-                <div class="in-progress"><span class="column-heading bg-secondary">In Progress</span></div>
-                <div class="review"><span class="column-heading bg-info text-dark">Review</span></div>
-                <div class="done"><span class="column-heading bg-success">Done</span></div>
+                <div class="todo mv-container"><span class="column-heading bg-primary">To Do</span></div>
+                <div class="in-progress mv-container"><span class="column-heading bg-secondary">In Progress</span></div>
+                <div class="review mv-container"><span class="column-heading bg-info text-dark">Review</span></div>
+                <div class="done mv-container"><span class="column-heading bg-success">Done</span></div>
         </div>
       </div>
     </main>

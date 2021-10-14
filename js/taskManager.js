@@ -5,7 +5,7 @@ class TaskManager {
         this._myStorage = window.localStorage;
         this._viewState = false;
     }
-
+ 
     get tasks() {
         return this._tasks;
     }
@@ -49,15 +49,15 @@ class TaskManager {
         const tasks = this._myStorage.getItem('tasks');
         const viewState = this._myStorage.getItem('viewState');
         if( tasks) {
-        this._tasks = JSON.parse(tasks);
-        this._currentId = this.tasks.length;
-        this._viewState = JSON.parse(viewState);
-    }
+            this._tasks = JSON.parse(tasks);
+            this._currentId = this.tasks.length;
+            this._viewState = JSON.parse(viewState);
+        }
     }
 
     getTask( id ) {
         for(let i = 0; i < this._tasks.length; ++i) {
-            if(this._tasks[i].taskId === id) {
+            if(this._tasks[i].taskId == id) {
                 return this._tasks[i];
             }
         }

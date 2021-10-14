@@ -106,6 +106,7 @@
     justify-content: center;
     align-items: center;
     background-color:rgb(240,240,240);
+    cursor: pointer;
 }
 
 .box img {
@@ -165,5 +166,21 @@ footer {
     margin-bottom: 15px;
     font-weight: bold;
     border-radius: 15px;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.3), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+#create-task, #view-selector{
+    color:black;
+    opacity: 0.7;
+    border: 1.3px solid orange;
+    
+}
+
+/* Drad and Drop */
+.draggable {
+    cursor: move;
+}
+
+.draggable.dragging {
+    opacity: 0.5;
 }
