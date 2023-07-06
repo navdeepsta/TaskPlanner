@@ -1,4 +1,4 @@
-The [TaskPlanner](https://niku1987.github.io/TaskPlanner) allows the users to create and track the progress of the tasks. 
+The [TaskPlanner](https://navdeepsta.github.io/TaskPlanner) allows the users to create and track the progress of the tasks. 
 
 ## The user can
 ---
